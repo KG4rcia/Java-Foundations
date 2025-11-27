@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/operadores/Operadores.iml" filepath="$PROJECT_DIR$/operadores/Operadores.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/aula02.iml" filepath="$PROJECT_DIR$/.idea/aula02.iml" />
       <module fileurl="file://$PROJECT_DIR$/estrutura de decisao/estrutura de decisao.iml" filepath="$PROJECT_DIR$/estrutura de decisao/estrutura de decisao.iml" />
     </modules>
