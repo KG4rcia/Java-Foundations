@@ -12,7 +12,7 @@ public class PrimeiroDesafio {
         System.out.print("===========\n");
 
         for (int i = num_usuario; i != 1; i--) {
-            System.out.println(": " + somatoria + " x " + (i-1) + " = " + (i-1)*somatoria);
+            System.out.println(somatoria + " x " + (i-1) + " = " + (i-1)*somatoria);
             somatoria *= i-1;
         }
 

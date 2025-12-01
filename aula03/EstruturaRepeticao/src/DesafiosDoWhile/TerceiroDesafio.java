@@ -12,15 +12,21 @@ public class TerceiroDesafio {
         do {
             System.out.print("Informe as notas [Digite 0 para encerrar]: ");
             nota = sc.nextInt();
-            qtd += 1;
-            soma += nota;
-
-
+            if (nota == 0) {
+                System.out.println("Saindo...");
+                break;
+            } else {
+                qtd += 1;
+                soma += nota;
+            }
         } while (nota != 0);
-        System.out.println("Encerrando...");
-        System.out.println("=========");
+        if (soma != 0) {
+            System.out.println("Calculando...");
+            System.out.println("=========");
+            System.out.printf("Média dos alunos: %d", soma/qtd);
+        } else {
+            System.out.println("=========");
 
-        System.out.printf("Média alunos: %d", soma/qtd);
-
+        }
     }
 }
