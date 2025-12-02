@@ -14,7 +14,7 @@ public class Matriz {
         notas[1] = 6;
         notas[2] = 7;
         notas[3] = 8;
-        notas[notas.length -1 ] = 6;
+        notas[notas.length -1] = 6;
 
 //        System.out.println(Arrays.toString(notas));
 //        System.out.println(notas[0]);
