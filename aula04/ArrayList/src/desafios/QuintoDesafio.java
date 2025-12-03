@@ -1,6 +1,5 @@
 package desafios;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class QuintoDesafio {
     static void main(String[] args) {
@@ -17,7 +16,6 @@ public class QuintoDesafio {
                 System.out.println("-> Saindo...");
                 break;
             }
-
             if (palavra.length() % 2 == 0) {
                 par.add(palavra);
                 palavras.add(palavra);
@@ -28,6 +26,8 @@ public class QuintoDesafio {
             }
                      
         }
+        Collections.sort(par);
+        Collections.sort((impar));
         System.out.println("\nPalavras: " + palavras);
         System.out.println("Palavras pares: " + par);
         System.out.println("Palavras impares: " + impar);

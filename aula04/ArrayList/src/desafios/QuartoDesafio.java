@@ -12,16 +12,16 @@ public class QuartoDesafio {
         while (true) {
             posicao++;
             System.out.printf("\n-> Digite a palavra da posição %d ['sair' para encerrar]: ", posicao);
-            String palavra = sc.nextLine();
+            String palavra = sc.nextLine().toLowerCase();
 
-            if (palavra.equals("Sair") || palavra.equals("sair")) {
+            if (palavra.equals("sair")) {
                 System.out.println("-> Saindo...");
                 break;
             }
             palavras.add(palavra);
         }
         System.out.println("-> Agora informe a letra que deseja filtrar da lista: ");
-        String letra = sc.nextLine();
+        String letra = sc.nextLine().toLowerCase();
         palavras.removeIf(itens -> itens.contains(letra));
         System.out.print("A sua lista de palavras ficou assim: ");
         System.out.print(palavras);
