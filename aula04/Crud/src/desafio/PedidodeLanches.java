@@ -1,6 +1,4 @@
 package desafio;
-
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 

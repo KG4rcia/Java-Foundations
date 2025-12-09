@@ -21,8 +21,8 @@ public class Main {
             System.out.println("ESCOLHA UMA OPÇÃO: ");
             opcao = sc.nextInt();
             sc.nextLine();
-            switch (opcao){
 
+            switch (opcao){
                 case 1 -> {
                     System.out.println("Informe o nome do aluno: ");
                     String nome = sc.nextLine();
@@ -37,6 +37,38 @@ public class Main {
 
                     Aluno aluno = new Aluno(nome, nota, nota2);
                     gerenciarAlunos.adicionarAluno(aluno);
+                }
+                case 2 -> {
+                    gerenciarAlunos.listarAlunos();
+                }
+                case 3 -> {
+                    gerenciarAlunos.listarAlunos();
+                    System.out.println("Informe o ID do aluno: ");
+                    int idAluno = sc.nextInt();
+
+                    System.out.println("Informe o nome do aluno: ");
+                    String nomeAluno = sc.nextLine();
+
+                    System.out.println("Informe a 1° nota do aluno: ");
+                    double notaAluno = sc.nextDouble();
+
+                    System.out.println("Informe a 2° nota do aluno: ");
+                    double notaAluno2 = sc.nextDouble();
+                    
+                    gerenciarAlunos.atualizarAluno(idAluno, nomeAluno, notaAluno, notaAluno2);
+                }
+                case 4 -> {
+                    gerenciarAlunos.listarAlunos();
+                    System.out.println("Informe o id do aluno: ");
+                    int idAluno = sc.nextInt();
+                    sc.nextLine();
+                    gerenciarAlunos.excluirAluno(idAluno);
+                }
+                case 5 -> {
+                    System.out.println("Programa finalizado com sucesso!");
+                    return;
+                } default -> {
+                    System.out.println("Escolha uma opção válida.");
                 }
 
 

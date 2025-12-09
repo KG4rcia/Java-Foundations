@@ -44,4 +44,5 @@ public class Aluno {
         return " | " + this.nome + " | " + this.nota
                 + " | " + this.nota2 + " | " +  this.calcularMedia() + " | ";
     }
+
 }
