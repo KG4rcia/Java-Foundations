@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Roupas - API Client</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* Estilização personalizada sobre o Bootstrap */
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Sombra suave */
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #0d6efd, #0a58ca); /* Gradiente Bootstrap Primary */
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border-bottom: 0;
+        }
+
+        .btn-custom {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #0b5ed7;
+            transform: translateY(-2px); /* Efeito de elevação */
+            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
+        }
+
+        .response-container {
+            background-color: #2d2d2d;
+            color: #50fa7b; /* Cor estilo terminal */
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            margin-top: 20px;
+            display: none; /* Oculto inicialmente */
+            border: 1px solid #444;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                
+                <div class="card">
+                    <div class="card-header">
+                        Cadastro de Produto (Roupas)
+                    </div>
+                    <div class="card-body p-4">
+                        
+                        <form id="formRoupas" novalidate>
+                            <div class="row g-3">
+                                
+                                <div class="col-md-12">
+                                    <label for="marca" class="form-label">Marca</label>
+                                    <input type="text" class="form-control" id="marca" placeholder="Ex: Nike, Adidas, Zara" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="tipo" class="form-label">Tipo</label>
+                                    <select class="form-select" id="tipo" required>
+                                        <option value="" selected disabled>Selecione...</option>
+                                        <option value="Camisa">Camisa</option>
+                                        <option value="Blusa">Blusa</option>
+                                        <option value="Suéter">Suéter</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="tamanho" class="form-label">Tamanho</label>
+                                    <select class="form-select" id="tamanho" required>
+                                        <option value="" selected disabled>Selecione...</option>
+                                        <option value="PP">PP</option>
+                                        <option value="P">P</option>
+                                        <option value="M">M</option>
+                                        <option value="G">G</option>
+                                        <option value="GG">GG</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="quantidade" class="form-label">Quantidade</label>
+                                    <input type="number" class="form-control" id="quantidade" min="1" step="1" placeholder="0" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="valor" class="form-label">Valor (R$)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">R$</span>
+                                        <input type="number" class="form-control" id="valor" step="0.01" placeholder="0.00" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-4 d-grid">
+                                    <button class="btn btn-primary btn-custom" type="submit">Cadastrar Produto</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="apiResponse" class="response-container">
+                            <h6 class="text-white border-bottom pb-2 mb-2">Resposta da API:</h6>
+                            <pre id="jsonOutput" class="m-0"></pre>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Seleciona o formulário
+        const form = document.getElementById('formRoupas');
+        const responseContainer = document.getElementById('apiResponse');
+        const jsonOutput = document.getElementById('jsonOutput');
+
+        // Adiciona o evento de 'submit' (envio)
+        form.addEventListener('submit', async function(event) {
+            // 1. Previne o recarregamento da página padrão
+            event.preventDefault();
+
+            // 2. Captura e Converte os Dados
+            // Nota: .value retorna String, por isso usamos parseInt e parseFloat
+            const dadosProduto = {
+                marca: document.getElementById('marca').value,
+                tipo: document.getElementById('tipo').value,
+                tamanho: document.getElementById('tamanho').value,
+                quantidade: parseInt(document.getElementById('quantidade').value), // Inteiro
+                valor: parseFloat(document.getElementById('valor').value)          // Decimal
+            };
+
+            // Validação simples no front-end antes de enviar
+            if (!dadosProduto.marca || !dadosProduto.tipo || !dadosProduto.tamanho || isNaN(dadosProduto.quantidade) || isNaN(dadosProduto.valor)) {
+                alert("Por favor, preencha todos os campos corretamente.");
+                return;
+            }
+
+            try {
+                // 3. Configuração da Requisição Fetch
+                const response = await fetch('http://localhost:8080/roupas', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json' // Importante para o Spring Boot entender
+                    },
+                    body: JSON.stringify(dadosProduto) // Transforma o objeto JS em texto JSON
+                });
+
+                // 4. Processamento da Resposta
+                if (response.ok) {
+                    const data = await response.json(); // Converte a resposta do servidor para objeto JS
+                    
+                    // Exibe o JSON formatado na tela
+                    responseContainer.style.display = 'block';
+                    jsonOutput.textContent = JSON.stringify(data, null, 4); // Indentação de 4 espaços
+                    
+                    // Opcional: Limpar o formulário após sucesso
+                    form.reset();
+                    alert('Produto cadastrado com sucesso!');
+                } else {
+                    throw new Error(`Erro na API: ${response.statusText}`);
+                }
+
+            } catch (error) {
+                // 5. Tratamento de Erros (ex: servidor desligado)
+                console.error('Erro:', error);
+                responseContainer.style.display = 'block';
+                jsonOutput.textContent = `ERRO: Não foi possível conectar ao servidor.\nDetalhes: ${error.message}`;
+                jsonOutput.style.color = '#ff5555';
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
